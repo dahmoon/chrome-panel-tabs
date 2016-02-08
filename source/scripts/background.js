@@ -232,10 +232,14 @@ function receiveContextMenuClick(info, tab) {
   switch (id) {
     case 'togglePanel':
       togglePanel(tab);
+      window.alert("background.js - Toggled Panel");
+      console.log("background.js - Toggled Panel");
       break;
 
     case 'openInPanel':
       openInPanel(info.linkUrl);
+      window.alert("background.js - Opened", info.linkUrl, " Panel");
+      console.log("background.js - Opened", info.linkUrl, " Panel");
       break;
   }
 }
@@ -391,7 +395,7 @@ function togglePanel(tab) {
  * @param {function} callback (Optional.)
  */
 function openInPanel(url, callback) {
-  chrome.windows.create({ url: url, focused: true, type: 'panel' }, callback);
+  chrome.windows.create({ url: "../html/index.html", focused: true, type: 'panel' }, callback);
 }
 
 /**
@@ -525,8 +529,10 @@ function getActivePanel(callback) {
 function openInFocusedWindow(url) {
   chrome.windows.getLastFocused(null, function(vindov) {
     if (vindov === undefined) {
+      window.alert("About to create a new window");
       chrome.windows.create({ url: url, focused: false });
     } else {
+      window.alert("About to create a new window");
       chrome.tabs.create({ windowId: vindov.id, url: url });
     }
   });
